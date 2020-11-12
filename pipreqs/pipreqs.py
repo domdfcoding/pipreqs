@@ -44,6 +44,7 @@ import ast
 import traceback
 from docopt import docopt
 import requests
+from stdlib_list import stdlib_list
 from yarg import json2package
 from yarg.exceptions import HTTPError
 
@@ -150,8 +151,7 @@ def get_all_imports(
     packages = imports - (set(candidates) & imports)
     logging.debug('Found packages: {0}'.format(packages))
 
-    with open(join("stdlib"), "r") as f:
-        data = {x.strip() for x in f}
+    data = {x.strip() for x in stdlib_list()}
 
     data = {x for x in data if x not in py2_exclude} if py2 else data
     return list(packages - data)
